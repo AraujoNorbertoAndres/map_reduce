@@ -69,7 +69,7 @@ def graficos(diccionario):
     plt.savefig("torta.jpg", bbox_inches='tight')
     plt.close('all')
 
-def archivos(diccionario):
+def crear_archivos(diccionario):
     with open("diccionario_de_palabras.txt", "w") as file:
         for clave, valor  in diccionario.items():
             file.write("%s : %s\n" %(clave, valor))
