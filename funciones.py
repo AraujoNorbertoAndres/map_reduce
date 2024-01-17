@@ -13,15 +13,19 @@ def mapeo(texto):
     palabra = ''
     for i in texto:
         palabra += i
-        if i == ' ':
-            i.strip()
+        if i == ' ' or i == '\n':
             palabra = re.sub(r'\W','',palabra)
             palabra = re.sub(r'\d','',palabra)
             palabras.append(palabra)
             palabra = ''
-    for j in palabras:
-        if len(j) <= 3:
-            palabras.remove(j)
+
+    lista_auxiliar = []
+    for l in palabras:
+        if len(l) > 3:
+            lista_auxiliar.append(l)
+
+    palabras = lista_auxiliar
+
     return palabras
 
 # esta funcion contabiliza las palabras repetidas y las agrega a un diccionario para su posterior analisis
@@ -74,4 +78,40 @@ def crear_archivos(diccionario):
         for clave, valor  in diccionario.items():
             file.write("%s : %s\n" %(clave, valor))
     
-    
+# esta funcion lee un archivo para luego devolverlo como texto
+def mapeo_de_archivo(nombre):
+    texto = ''
+
+    with open(nombre,'r') as file:
+        texto = file.readlines()
+
+    palabra = ''
+    palabras = []
+
+    for i in texto:
+        for j in i:
+            palabra += j
+            if j == ' ' or j == '\n':
+                palabra = re.sub(r'\W','',palabra)
+                palabra = re.sub(r'\d','',palabra)
+                palabras.append(palabra)
+                palabra = ''
+
+    texto = []
+    for l in palabras:
+        if len(l) > 3:
+            texto.append(l)
+
+
+    return texto
+
+
+
+
+# desde aca se maneja la funcion lectura_archivo()
+# no es necesario llamar a dicha
+def ingreso():
+    nombre = input('ingrese el nombre del archivo que desea analizar: ')
+    texto = mapeo_de_archivo(nombre)
+    return texto
+
